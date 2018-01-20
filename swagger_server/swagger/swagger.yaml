@@ -9,8 +9,8 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "virtserver.swaggerhub.com"
-basePath: "/yuml/MIAI/1.0.0"
+#host: "mi.liyumeng.me"
+basePath: "/v1"
 tags:
 - name: "Mi"
   description: "小米音箱接口"
