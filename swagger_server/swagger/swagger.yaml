@@ -1,0 +1,462 @@
+---
+swagger: "2.0"
+info:
+  description: "小米AI音箱第三方API接入"
+  version: "1.0.0"
+  title: "小米AI音箱第三方API接入"
+  contact:
+    email: "liyumeng.cs@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/yuml/MIAI/1.0.0"
+tags:
+- name: "Mi"
+  description: "小米音箱接口"
+schemes:
+- "https"
+paths:
+  /mi_qa:
+    post:
+      tags:
+      - "MI"
+      summary: "小米AI音箱"
+      description: "小米AI音箱"
+      operationId: "mi_qa"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "contents"
+        description: "输入"
+        required: false
+        schema:
+          $ref: "#/definitions/MiRequest"
+      responses:
+        200:
+          description: "返回结果"
+          schema:
+            $ref: "#/definitions/MiResponse"
+      x-swagger-router-controller: "swagger_server.controllers.mi_controller"
+  /test:
+    get:
+      tags:
+      - "MI"
+      summary: "测试请求"
+      description: "测试请求"
+      operationId: "mi_test"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "content"
+        in: "query"
+        description: "传入一个句子"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "返回结果"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+      x-swagger-router-controller: "swagger_server.controllers.mi_controller"
+definitions:
+  MiRequest:
+    type: "object"
+    properties:
+      version:
+        type: "string"
+      query:
+        type: "string"
+      session:
+        $ref: "#/definitions/MiRequest_session"
+      context:
+        $ref: "#/definitions/MiRequest_context"
+      request:
+        $ref: "#/definitions/MiRequest_request"
+    example:
+      request:
+        event_property: "{}"
+        no_response: true
+        even_type: "even_type"
+        type: 0
+        locale: "locale"
+        request_id: "request_id"
+        intent: "{}"
+        timestamp: 6
+      session:
+        application:
+          app_id: "app_id"
+        session_id: "session_id"
+        attributes: "{}"
+        user:
+          access_token: "access_token"
+          user_id: "user_id"
+      query: "query"
+      context:
+        passport: "{}"
+        device_id: "device_id"
+      version: "version"
+  MiResponse:
+    type: "object"
+    properties:
+      version:
+        type: "string"
+      session_attributes:
+        type: "object"
+        properties: {}
+      is_session_end:
+        type: "boolean"
+      response:
+        $ref: "#/definitions/MiResponse_response"
+    example:
+      is_session_end: true
+      response:
+        open_mic: true
+        directives:
+          audio_item:
+            stream:
+              offset_in_milliseconds: 5
+              url: "url"
+              token: "token"
+          tts_item:
+            text: "text"
+            type: "type"
+          type: "type"
+        to_display:
+          ui_template:
+            item:
+              background_image: "background_image"
+              images: "{}"
+              image_style: "image_style"
+              title: "title"
+              body: "{}"
+              intent: "intent"
+            type: 1
+            items:
+              images: "{}"
+              logo: "logo"
+              image_style: "image_style"
+              title: "title"
+              intent: "intent"
+          widget:
+            params: "{}"
+            info: "{}"
+          text: "text"
+          type: 6
+          url: "url"
+        not_understand: true
+        to_speak:
+          text: "text"
+          type: 0
+      version: "version"
+      session_attributes: "{}"
+  inline_response_200:
+    properties:
+      code:
+        type: "integer"
+      data:
+        type: "string"
+    example:
+      code: 0
+      data: "data"
+  MiRequest_session_application:
+    properties:
+      app_id:
+        type: "string"
+    example:
+      app_id: "app_id"
+  MiRequest_session_user:
+    properties:
+      user_id:
+        type: "string"
+      access_token:
+        type: "string"
+    example:
+      access_token: "access_token"
+      user_id: "user_id"
+  MiRequest_session:
+    properties:
+      session_id:
+        type: "string"
+      application:
+        $ref: "#/definitions/MiRequest_session_application"
+      attributes:
+        type: "object"
+        properties: {}
+      user:
+        $ref: "#/definitions/MiRequest_session_user"
+    example:
+      application:
+        app_id: "app_id"
+      session_id: "session_id"
+      attributes: "{}"
+      user:
+        access_token: "access_token"
+        user_id: "user_id"
+  MiRequest_context:
+    properties:
+      passport:
+        type: "object"
+        properties: {}
+      device_id:
+        type: "string"
+    example:
+      passport: "{}"
+      device_id: "device_id"
+  MiRequest_request:
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      request_id:
+        type: "string"
+      timestamp:
+        type: "integer"
+        format: "long"
+      locale:
+        type: "string"
+      intent:
+        type: "object"
+        properties: {}
+      no_response:
+        type: "boolean"
+      even_type:
+        type: "string"
+      event_property:
+        type: "object"
+        properties: {}
+    example:
+      event_property: "{}"
+      no_response: true
+      even_type: "even_type"
+      type: 0
+      locale: "locale"
+      request_id: "request_id"
+      intent: "{}"
+      timestamp: 6
+  MiResponse_response_to_speak:
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      text:
+        type: "string"
+    example:
+      text: "text"
+      type: 0
+  MiResponse_response_to_display_ui_template_items:
+    properties:
+      image_style:
+        type: "string"
+      images:
+        type: "object"
+        properties: {}
+      intent:
+        type: "string"
+      title:
+        type: "string"
+      logo:
+        type: "string"
+    example:
+      images: "{}"
+      logo: "logo"
+      image_style: "image_style"
+      title: "title"
+      intent: "intent"
+  MiResponse_response_to_display_ui_template_item:
+    properties:
+      image_style:
+        type: "string"
+      images:
+        type: "object"
+        properties: {}
+      intent:
+        type: "string"
+      title:
+        type: "string"
+      body:
+        type: "object"
+        properties: {}
+      background_image:
+        type: "string"
+    example:
+      background_image: "background_image"
+      images: "{}"
+      image_style: "image_style"
+      title: "title"
+      body: "{}"
+      intent: "intent"
+  MiResponse_response_to_display_ui_template:
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      items:
+        $ref: "#/definitions/MiResponse_response_to_display_ui_template_items"
+      item:
+        $ref: "#/definitions/MiResponse_response_to_display_ui_template_item"
+    example:
+      item:
+        background_image: "background_image"
+        images: "{}"
+        image_style: "image_style"
+        title: "title"
+        body: "{}"
+        intent: "intent"
+      type: 1
+      items:
+        images: "{}"
+        logo: "logo"
+        image_style: "image_style"
+        title: "title"
+        intent: "intent"
+  MiResponse_response_to_display_widget:
+    properties:
+      info:
+        type: "object"
+        properties: {}
+      params:
+        type: "object"
+        properties: {}
+    example:
+      params: "{}"
+      info: "{}"
+  MiResponse_response_to_display:
+    properties:
+      type:
+        type: "integer"
+        format: "int32"
+      url:
+        type: "string"
+      text:
+        type: "string"
+      ui_template:
+        $ref: "#/definitions/MiResponse_response_to_display_ui_template"
+      widget:
+        $ref: "#/definitions/MiResponse_response_to_display_widget"
+    example:
+      ui_template:
+        item:
+          background_image: "background_image"
+          images: "{}"
+          image_style: "image_style"
+          title: "title"
+          body: "{}"
+          intent: "intent"
+        type: 1
+        items:
+          images: "{}"
+          logo: "logo"
+          image_style: "image_style"
+          title: "title"
+          intent: "intent"
+      widget:
+        params: "{}"
+        info: "{}"
+      text: "text"
+      type: 6
+      url: "url"
+  MiResponse_response_directives_audio_item_stream:
+    properties:
+      token:
+        type: "string"
+      url:
+        type: "string"
+      offset_in_milliseconds:
+        type: "integer"
+        format: "long"
+    example:
+      offset_in_milliseconds: 5
+      url: "url"
+      token: "token"
+  MiResponse_response_directives_audio_item:
+    properties:
+      stream:
+        $ref: "#/definitions/MiResponse_response_directives_audio_item_stream"
+    example:
+      stream:
+        offset_in_milliseconds: 5
+        url: "url"
+        token: "token"
+  MiResponse_response_directives_tts_item:
+    properties:
+      text:
+        type: "string"
+      type:
+        type: "string"
+    example:
+      text: "text"
+      type: "type"
+  MiResponse_response_directives:
+    properties:
+      type:
+        type: "string"
+      audio_item:
+        $ref: "#/definitions/MiResponse_response_directives_audio_item"
+      tts_item:
+        $ref: "#/definitions/MiResponse_response_directives_tts_item"
+    example:
+      audio_item:
+        stream:
+          offset_in_milliseconds: 5
+          url: "url"
+          token: "token"
+      tts_item:
+        text: "text"
+        type: "type"
+      type: "type"
+  MiResponse_response:
+    properties:
+      to_speak:
+        $ref: "#/definitions/MiResponse_response_to_speak"
+      to_display:
+        $ref: "#/definitions/MiResponse_response_to_display"
+      directives:
+        $ref: "#/definitions/MiResponse_response_directives"
+      open_mic:
+        type: "boolean"
+      not_understand:
+        type: "boolean"
+    example:
+      open_mic: true
+      directives:
+        audio_item:
+          stream:
+            offset_in_milliseconds: 5
+            url: "url"
+            token: "token"
+        tts_item:
+          text: "text"
+          type: "type"
+        type: "type"
+      to_display:
+        ui_template:
+          item:
+            background_image: "background_image"
+            images: "{}"
+            image_style: "image_style"
+            title: "title"
+            body: "{}"
+            intent: "intent"
+          type: 1
+          items:
+            images: "{}"
+            logo: "logo"
+            image_style: "image_style"
+            title: "title"
+            intent: "intent"
+        widget:
+          params: "{}"
+          info: "{}"
+        text: "text"
+        type: 6
+        url: "url"
+      not_understand: true
+      to_speak:
+        text: "text"
+        type: 0
