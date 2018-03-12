@@ -26,7 +26,7 @@ http://localhost:12030/v1/ui
 > 线上部署需要有自己的云服务器、域名，小米的水滴平台要求接口是https的，因此还需要申请https的证书。
 
 云服务器可使用国内的阿里云[链接](www.aliyun.com)、腾讯云[链接](cloud.tencent.com)，
-国外的Digital Ocean[链接](https://m.do.co/c/73c1f5a60b4f)、hostmybytes[链接](https://clients.hostmybytes.com/aff.php?aff=748&pid=178)等。
+国外的搬瓦工[链接](https://bandwagonhost.com/aff.php?aff=29201)、hostmybytes[链接](https://clients.hostmybytes.com/aff.php?aff=748&pid=178)、Digital Ocean[链接](https://m.do.co/c/73c1f5a60b4f)等。
 
 域名注册的话，阿里云、腾讯云、godaddy等网站也很便宜，如果使用国内的云服务器的话，别忘了进行域名实名认证和备案。
 
